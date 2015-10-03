@@ -1,8 +1,23 @@
+/********************************************************************
+ * Author:					David Bartholomew
+ * Date Created:			09/28/2015
+ * Last Modification Date:	10/03/2015
+ * Filenames:				driver.cpp
+ *
+ * Overview:
+ * 	basic 'testing' file for assignment 1
+ * Algorithm:
+ * 	Instantiation of array objects, testing the dynamic nature of the
+ * 	arrays, and testing the exception conditions per the assignment 
+ * 	guidelines
+ *
+ *********************************************************************/
+
 #include <iostream>
 #include "array.h"
+#include "exception.h"
 
 using namespace std;
-
 
 int main()
 {
@@ -18,8 +33,23 @@ int main()
 	{
 		intArray[i] = i*i;
 	}
-	cout << "Please enter an index to evaluate: ";
+		cout << "Checking 'invalid length condition'." << endl;
+	try {	
+		Array<int> badArray(-1,0);
+	}
+	catch (const Exception &error_msg) {
+		cout << "Exception: " << error_msg.getMessage() << endl;
+	}	
+		cout << "Checking 'out of bounds' index." << endl;
+		cout << "Array value at index 45 is: ";
+	try {	
+		intArray[45];
+	}
+	catch (const Exception &error_msg) {
+		cout << "Exception: " << error_msg.getMessage() << endl;	
+	}
 
 	return 0;
 
 }
+

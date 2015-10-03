@@ -1,9 +1,25 @@
-#include <iostream>
+/********************************************************************
+ * Author:					David Bartholomew
+ * Date Created:			09/28/2015
+ * Last Modification Date:	10/03/2015
+ * Filenames:				array.h
+ *
+ * Overview:
+ * 	Array header file for assignment 1
+ * Algorithm:
+ * 	Default constructor, constructor with parameters, default destructor
+ * 	built out overloaded operators for ease and transparency of use
+ * 	built out getters and setters; used assigned constraints as a means
+ * 	to implement exception handling internally
+ *
+ **********************************************************************/
 
+#include <iostream>
 using namespace std;
 
-const int MAX_BUF = 40; 	//we aren't given a top bound, so 
-				//I'm arbitrarily choosing one
+const int MAX_BUF = 40; 	
+				
+class Exception;
 
 template<class T>
 class Array{
@@ -37,7 +53,7 @@ Array<T>::Array() {
 template <class T>
 Array<T>::Array(int length, int start_index) {
 	cout << "Default Constructor with field data..." << endl;
-	m_length = length;
+	setLength(length);
 	m_start_index = start_index;
 }
 
@@ -50,6 +66,10 @@ Array<T>::~Array() {
 
 template <class T>
 void Array<T>::setLength(int length) { 
+
+	if(length<1)
+		throw (Exception((char*) "Invalid Length"));
+
 	int j;
 	if (length > m_length)
 		j = m_length;
@@ -61,7 +81,6 @@ void Array<T>::setLength(int length) {
 	{
 		temp[i] = m_array[i];
 	}
-	//delete [] m_array;
 	m_array = temp;
 	temp = NULL;
 	m_length = length;
@@ -85,61 +104,9 @@ Array<T> & Array<T>::operator=(const Array<T> & rhs) {
 
 template <class T>
 T & Array<T>::operator[](int index) {
+	if((index < m_start_index) || (index > m_length))
+		throw Exception ((char *) "Index out of bounds");
+
 	return m_array[index];
 }
 
-class Exception {
-	public:
-		Exception();
-		Exception(char * msg);
-		Exception(const Exception& aException);
-		~Exception();
-
-		Exception & operator=(Exception & aException);
-		friend ostream & operator<<(ostream&, Exception & aException);	
-		char* getMessage() const;
-		void setMessage(char * message);
-	private:
-		char * m_msg;	
-};
-
-Exception::Exception() {
-	cout << "Exception constructor witout params..." << endl;
-	m_msg = "Non-specific error...";
-}
-
-
-Exception::Exception(char * msg) {
-	cout << "Exception constructor with message..." << endl;
-	int b=strlen(msg)+1;
-	memcpy(m_msg,msg,b);
-}
-
-Exception::Exception(const Exception& aException) {
-	cout << "Copy Constructor..." << endl;
-	m_msg = new char[MAX_BUF];
-	int b=strlen(aException.getMessage())+1;
-	memcpy(m_msg,aException.getMessage(),b);
-}
-
-Exception::~Exception() {
-	cout << "Exception Destructor..." << endl;
-	if(m_msg != NULL)
-		delete[] m_msg;
-}
-
-Exception & Exception::operator=(Exception & aException) {
-	int b=strlen(aException.getMessage())+1;
-	memcpy(m_msg,aException.getMessage(),b);
-}
-
-ostream& operator<<(ostream&, Exception & aException) {
-	cout << aException.getMessage() << endl;
-}
-
-void Exception::setMessage(char * message) {
-	int b=strlen(message)+1;
-	memcpy(m_msg,message,b);
-}
-
-char * Exception::getMessage() const { return m_msg; }
