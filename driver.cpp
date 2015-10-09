@@ -1,23 +1,27 @@
-/********************************************************************
- * Author:					David Bartholomew
- * Date Created:			09/28/2015
- * Last Modification Date:	10/03/2015
- * Filenames:				driver.cpp
- *
- * Overview:
- * 	basic 'testing' file for assignment 1
- * Algorithm:
- * 	Instantiation of array objects, testing the dynamic nature of the
- * 	arrays, and testing the exception conditions per the assignment 
- * 	guidelines
- *
- *********************************************************************/
+/*
+
+    Author:			David Bartholomew
+    Date Created:		10/09/15
+    Class information:		CST 211; Joshua Dutton
+    Filename:			driver.cpp
+
+    Overview: testing file for assignment 1; designed to 
+    demonstrate instantiation of a templated array and 
+    to test the assigned exception class
+
+    Input: no inputs
+    
+    Output: outputs to the console
+   
+*/
 
 #include <iostream>
 #include "array.h"
 #include "exception.h"
 
 using namespace std;
+
+const int MAX_BUF = 40; 	
 
 int main()
 {
@@ -41,9 +45,8 @@ int main()
 		cout << "Exception: " << error_msg.getMessage() << endl;
 	}	
 		cout << "Checking 'out of bounds' index." << endl;
-		cout << "Array value at index 45 is: ";
 	try {	
-		intArray[45];
+		cout << "Array value at index 45 is: " << intArray[45] << endl;
 	}
 	catch (const Exception &error_msg) {
 		cout << "Exception: " << error_msg.getMessage() << endl;	
@@ -52,4 +55,3 @@ int main()
 	return 0;
 
 }
-
