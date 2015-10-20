@@ -66,5 +66,5 @@ class Array2D {
             int m_col;      //column index
 };
 
-#include "array2D.cpp"
+#include "array2D.tcc"
 

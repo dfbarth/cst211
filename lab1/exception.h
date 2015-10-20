@@ -43,4 +43,4 @@ class Exception {
 		char * m_msg;	
 };
 
-#include "exception.cpp"
+#include "exception.tcc"
