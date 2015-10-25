@@ -1,5 +1,3 @@
-//#include <iostream>
-//#include <cstring>
 
 /*	Purpose: Default Exception constructor class
                  
@@ -53,6 +51,7 @@ Exception::~Exception() {
 Exception & Exception::operator=(Exception & aException) {
 	int b=strlen(aException.getMessage())+1;
 	memcpy(m_msg,aException.getMessage(),b);
+	return *this;
 }
 
 /*	Purpose: overloaded bitwise operator; so that exception messages can be passed out as required, regardless of the available output structure
